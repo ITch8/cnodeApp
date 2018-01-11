@@ -10,9 +10,9 @@ var ASKURL = "https://cnodejs.org/api/v1/";
 	 * @param error 请求失敗回调函数
 	 * */
 	u.mypost = function(postUrl, pdata, type, show, success, error) {
-		if(show) {
-			plus.nativeUI.showWaiting("努力加載中...");
-		}
+//		if(show) {
+//			plus.nativeUI.showWaiting("努力加載中...");
+//		}
 		setTimeout(function() {
 			_.ajax({
 				url: ASKURL + postUrl,
@@ -21,11 +21,11 @@ var ASKURL = "https://cnodejs.org/api/v1/";
 				timeout: 60000,
 				success: function(data) {
 					console.log('data=======' + JSON.stringify(data));
-					plus.nativeUI.closeWaiting();
+//					plus.nativeUI.closeWaiting();
 					_.isFunction(success) ? success(data) : '';
 				},
 				error: function(xhr) {
-					plus.nativeUI.closeWaiting();
+//					plus.nativeUI.closeWaiting();
 					_.isFunction(error) ? error() : _.toast('網酪連接超時');
 				}
 			});
