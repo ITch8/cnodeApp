@@ -3,227 +3,158 @@
 
 	<head>
 		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-		<title></title>
-		<link href="css/mui.min.css" rel="stylesheet" />
-		<link rel="stylesheet" href="css/mescroll.css" />
+		<title>Hello MUI</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link rel="stylesheet" href="css/mui.min.css">
 		<style>
-			body {
-			    background-color: white;
-			}
-			.mui-media {
-				font-size: 14px;
-			}
-			
-			.mui-table-view .mui-media-object {
-				max-width: initial;
-				width: 90px;
-				height: 70px;
-			}
-			
-			.meta-info {
-				position: absolute;
-				left: 115px;
-				right: 15px;
-				bottom: 8px;
-				color: #8f8f94;
+			.mui-pull-top-wrapper {
+				width: 42px;
+				height: 42px;
+				display: block;
+				text-align: center;
+				background-color: #efeff4;
+				border: 1px solid #ddd;
+				border-radius: 25px;
+				background-clip: padding-box;
+				box-shadow: 0 4px 10px #bbb;
+				overflow: hidden;
 			}
 			
-			.meta-info .author,
-			.meta-info .time {
-				display: inline-block;
+			.mui-pull-top-tips.mui-transitioning {
+				-webkit-transition-duration: 200ms;
+				transition-duration: 200ms;
 			}
 			
-			.meta-info .time {
-				float: right;
+			.mui-pull-top-tips .mui-pull-loading {
+				/*-webkit-backface-visibility: hidden;
+				-webkit-transition-duration: 400ms;
+				transition-duration: 400ms;*/
+				margin: 0;
 			}
 			
-			.mui-table-view:before,
-			.mui-table-view:after {
-				height: 0;
+			.mui-pull-top-wrapper .mui-icon,
+			.mui-pull-top-wrapper .mui-spinner {
+				margin-top: 0px;
 			}
 			
-			.mui-content>.mui-table-view:first-child {
-				margin-top: 1px;
+			.mui-pull-top-wrapper .mui-icon.mui-reverse {
+				/*-webkit-transform: rotate(180deg) translateZ(0);*/
 			}
-			/*列表*/
-			.mescroll{
-				position: fixed;
-				top: 0px;
-				bottom: 0;
-				height: auto;
+			
+			.mui-pull-bottom-tips {
+				text-align: center;
+				background-color: #efeff4;
+				font-size: 15px;
+				line-height: 40px;
+				color: #777;
+			}
+			
+			.mui-pull-top-canvas {
+				overflow: hidden;
+				background-color: #fafafa;
+				border-radius: 40px;
+				box-shadow: 0 4px 10px #bbb;
+				width: 40px;
+				height: 40px;
+				margin: 0 auto;
+			}
+			
+			.mui-pull-top-canvas canvas {
+				width: 40px;
+			}
+			
+			.mui-slider-indicator.mui-segmented-control {
+				background-color: #efeff4;
+			}
+			
+			.mui-segmented-control.mui-scroll-wrapper .mui-scroll{
+				width: 100%;
+			}
+			.mui-segmented-control.mui-scroll-wrapper .mui-control-item{
+				width: 25%;
+			}
+			
+			.mui-slider-indicator.mui-segmented-control{
+				background: #4a4747;
+			}
+			.mui-segmented-control.mui-scroll-wrapper .mui-control-item{
+				color: #fff;
 			}
 		</style>
 	</head>
 
 	<body>
-			<!--滑动区域-->
-			<div id="mescroll" class="mescroll">
-				<!--展示上拉加载的数据列表-->
-				<ul id="dataList"  class="mui-table-view">
-					<li class="mui-table-view-cell mui-media" v-for="item in items">
-						<a :data-guid="item.id" @tap="open_detail(item)">
-							<img class="mui-media-object mui-pull-left" :src="item.cover">
-							<div class="mui-media-body">
-								<div class="mui-ellipsis-2">{{item.title}}</div>
-							</div>
-							<div class="meta-info">
-								<div class="author">{{item.author}}</div>
-								<div class="time">{{item.time}}</div>
-							</div>
+		<div class="mui-content">
+			<div id="slider" class="mui-slider mui-fullscreen">
+				<div id="sliderSegmentedControl" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+					<div class="mui-scroll">
+						<a class="mui-control-item mui-active" href="#item1mobile" data-wid="page_good.html">
+							精华
 						</a>
-					</li>
-				</ul>
+						<a class="mui-control-item" href="#item2mobile" data-wid="page_share.html">
+							分享
+						</a>
+						<a class="mui-control-item" href="#item3mobile" data-wid="page_ask.html">
+							问答
+						</a>
+						<a class="mui-control-item" href="#item4mobile" data-wid="page_jobs.html">
+							招聘
+						</a>
+					</div>
+				</div>
+			</div>
 		</div>
-	</body>
-	<script src="js/mui.min.js"></script>
-	<script type="text/javascript" src="js/mescroll.js"></script>
-	<script type="text/javascript" src="js/vue.min.js"></script>
-	<script type="text/javascript" src="js/common.js"></script>
-	<script type="text/javascript" charset="utf-8">
-//		mui.init();
-		//创建vue对象
-		var vm = new Vue({
-			el: "#dataList",
-			data: {
-				mescroll: null,
-				items: []
-			},
-			mounted: function() {
-				//创建MeScroll对象,down可以不用配置,因为内部已默认开启下拉刷新,重置列表数据为第一页
-				//解析: 下拉回调默认调用mescroll.resetUpScroll(); 而resetUpScroll会将page.num=1,再执行up.callback,从而实现刷新列表数据为第一页;
-				var self = this;
-				self.mescroll = new MeScroll("mescroll", {
-					up: {
-						callback: self.upCallback, //上拉回调
-						//以下参数可删除,不配置
-						page:{size:8}, //可配置每页8条数据,默认10
-						toTop: { //配置回到顶部按钮
-							src: "img/mescroll-totop.png", //默认滚动到1000px显示,可配置offset修改
-							//offset : 1000
-						},
-						empty: { //配置列表无任何数据的提示
-							warpId: "dataList",
-							icon: "img/mescroll-empty.png",
-							//						  	tip : "亲,暂无相关数据哦~" , 
-							//						  	btntext : "去逛逛 >" , 
-							//						  	btnClick : function() {
-							//						  		alert("点击了去逛逛按钮");
-							//						  	} 
+		<script src="js/mui.min.js"></script>
+		<script src="js/webviewGroup.js" type="text/javascript" charset="utf-8"></script>
+		<script>
+			mui.init();
+			
+			mui.plusReady(function() {
+				var _self = plus.webview.currentWebview();
+				var group = new webviewGroup(_self.id, {
+					items: [{
+						id: "page_good.html",
+						url: "page_good.html",
+						extras: {}
+					}, {
+						id: "page_share.html",
+						url: "page_share.html",
+						extras: {}
+					}, {
+						id: "page_ask.html",
+						url: "page_ask.html",
+						extras: {}
+					}, {
+						id: "page_job.html",
+						url: "page_job.html",
+						extras: {}
+					}],
+					onChange: function(obj) {
+						var c = document.querySelector(".mui-control-item.mui-active");
+						if(c) {
+							c.classList.remove("mui-active");
+						}
+						var target = document.querySelector(".mui-scroll .mui-control-item:nth-child(" + (parseInt(obj.index) + 1) + ")");
+						target.classList.add("mui-active");
+						if(target.scrollIntoView) {
+							target.scrollIntoView();
 						}
 					}
 				});
-
-				//初始化vue后,显示vue模板布局
-				document.getElementById("dataList").style.display = "block";
-			},
-			methods: {
-				//上拉回调 page = {num:1, size:10}; num:当前页 ,默认从1开始; size:每页数据条数,默认10
-				upCallback: function(page) {
-					console.log("page.num==" + page.num + ", page.size==" + page.size);
-					//联网加载数据
-					var self = this;
-					getListDataFromNet(page.num, page.size, function(data) {
-						//data=[]; //打开本行注释,可演示列表无任何数据empty的配置
-						
-						data = convert(data.data);
-						
-						//如果是第一页需手动制空列表
-						if(page.num == 1) self.items = [];
-						console.log("data==" + JSON.stringify(data));
-						//更新列表数据
-						self.items = data;
-						console.log("self.items.length==" + self.items.length);
-
-						//联网成功的回调,隐藏下拉刷新和上拉加载的状态;
-						//传参:数据的总数; mescroll会自动判断列表是否有无下一页数据,如果数据不满一页则提示无更多数据;
-						self.mescroll.endSuccess(data.length);
-
-					}, function() {
-						//联网失败的回调,隐藏下拉刷新和上拉加载的状态;
-						self.mescroll.endErr();
-					});
-				},
-			},
-		});
-
-		/*
-		 * get /topics 主题首页接收 get 参数
-		 * page Number 页数
-		 * tab String 主题分类。目前有 ask share job good
-		 * limit Number 每一页的主题数量
-		 * mdrender String 当为 false 时，不渲染。默认为 true，渲染出现的所有 markdown 格式文本
-		 * */
-		function getListDataFromNet(pageNum, pageSize, successCallback, errorCallback) {
-			util.mypost('topics', {
-				page: pageNum,
-				limit: pageSize,
-				tab: 'good',
-				mdrender: true
-			}, 'get', false, successCallback, errorCallback)
-		}
-		
-		
-		/**
-		 * 1、将服务端返回数据，转换成前端需要的格式
-		 * 2、若服务端返回格式和前端所需格式相同，则不需要改功能
-		 * 
-		 * @param {Array} items 
-		 */
-		function convert(items) {
-			var newItems = [];
-			items.forEach(function(item) {
-				newItems.push({
-					id: item.id,
-					title: item.title,
-					author: item.author.loginname,
-					cover: item.author.avatar_url,
-					time: dateUtils.format(item.create_at)
+				mui(".mui-scroll").on("tap", ".mui-control-item", function(e) {
+					var wid = this.getAttribute("data-wid");
+					group.switchTab(wid);
 				});
-			});
-			return newItems;
-		}
-		
-		/**
- * 格式化时间的辅助类，将一个时间转换成x小时前、y天前等
- */
-var dateUtils = {
-	UNITS: {
-		'年': 31557600000,
-		'月': 2629800000,
-		'天': 86400000,
-		'小时': 3600000,
-		'分钟': 60000,
-		'秒': 1000
-	},
-	humanize: function(milliseconds) {
-		var humanize = '';
-		mui.each(this.UNITS, function(unit, value) {
-			if(milliseconds >= value) {
-				humanize = Math.floor(milliseconds / value) + unit + '前';
-				return false;
-			}
-			return true;
-		});
-		return humanize || '刚刚';
-	},
-	format: function(dateStr) {
-		var date = this.parse(dateStr)
-		var diff = Date.now() - date.getTime();
-		if(diff < this.UNITS['天']) {
-			return this.humanize(diff);
-		}
 
-		var _format = function(number) {
-			return(number < 10 ? ('0' + number) : number);
-		};
-		return date.getFullYear() + '/' + _format(date.getMonth() + 1) + '/' + _format(date.getDay()) + '-' + _format(date.getHours()) + ':' + _format(date.getMinutes());
-	},
-	parse: function(str) { //将"yyyy-mm-dd HH:MM:ss"格式的字符串，转化为一个Date对象
-		var a = str.split(/[^0-9]/);
-		return new Date(a[0], a[1] - 1, a[2], a[3], a[4], a[5]);
-	}
-};
-	</script>
+			});
+			mui.back = function() {
+				var _self = plus.webview.currentWebview();
+				_self.close("auto");
+			}
+		</script>
+	</body>
 
 </html>
