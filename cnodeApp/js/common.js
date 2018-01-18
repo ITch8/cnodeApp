@@ -30,6 +30,51 @@ var ASKURL = "https://cnodejs.org/api/v1/";
 })(window, mui, window.util = {});
 
 /**
+		 * 1、将服务端返回数据，转换成前端需要的格式
+		 * 2、若服务端返回格式和前端所需格式相同，则不需要改功能
+		 * 
+		 * @param {Array} items 
+		 */
+		function convert(items) {
+			var newItems = [];
+			items.forEach(function(item) {
+				newItems.push({
+					id: item.id,
+					title: item.title,
+					author: item.author.loginname,
+					cover: item.author.avatar_url,
+					time: dateUtils.format(item.create_at)
+				});
+			});
+			return newItems;
+		}
+
+		/**
+		 * 打开新闻详情
+		 * 
+		 * @param {Object} item 当前点击的新闻对象
+		 */
+		function open_detail(item) {
+			//触发子窗口变更新闻详情
+			mui.fire(webview_detail, 'get_detail', {
+				id: item.id,
+				title: item.title,
+				author: item.author,
+				time: item.time,
+				cover: item.cover
+			});
+
+			//更改详情页原生导航条信息
+			titleNView.titleText = item.title;
+			webview_detail.setStyle({
+				"titleNView": titleNView
+			});
+			setTimeout(function() {
+				webview_detail.show("slide-in-right", 300);
+			}, 150);
+		}
+
+/**
  * 格式化时间的辅助类，将一个时间转换成x小时前、y天前等
  */
 var dateUtils = {
