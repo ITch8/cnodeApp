@@ -13,8 +13,10 @@ mui + html5Plus + vue2
 v1.0.0
 5个页面包括，是精华、分享、问答、招聘为主题的文章列表，和文章详情页
 
+#截图
 
-
+列表页面
 ![列表页面](https://github.com/ITch8/cnodeApp/blob/master/net_img/1.jpg)
 
+详情页面
 ![详情页面](https://github.com/ITch8/cnodeApp/blob/master/net_img/2.jpg)
