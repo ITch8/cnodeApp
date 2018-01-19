@@ -15,4 +15,6 @@ v1.0.0
 
 
 
-![列表页面](cnodeApp/net_img/1.jpg)
+![列表页面](https://github.com/ITch8/cnodeApp/blob/master/net_img/1.jpg)
+
+![详情页面](https://github.com/ITch8/cnodeApp/blob/master/net_img/2.jpg)
