@@ -31,8 +31,8 @@ proto._initNativeView = function() {
 	// fixed by wmy 因为沉浸式应用，需要额外加上状态栏高度
 	var statusbar_H = plus.navigator.getStatusbarHeight(); 
 	this.nativeView = new plus.nativeObj.View('__MUI_TAB_NATIVE', {
-		'top': (40 + statusbar_H) +'px', //这个需要根据顶部导航及顶部选项卡高度自动调整
-		'height': (window.screen.height - 40)+"px",
+		'top': (50 + statusbar_H) +'px', //这个需要根据顶部导航及顶部选项卡高度自动调整
+		'height': (window.screen.height - 50)+"px",
 		'left': '100%',
 		'width': '100%',
 		"backgroundColor":"#ffffff"
@@ -231,7 +231,7 @@ var _proto = webviewGroupContext.prototype;
 _proto.createWebview = function(from) {
 	var options = this.options;
 	options.styles = options.styles || {
-		top: "40px",
+		top: "50px",
 		bottom: "0px",
 		render: "always"
 	};
