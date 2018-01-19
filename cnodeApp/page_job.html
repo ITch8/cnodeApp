@@ -73,7 +73,6 @@
 						data = convert(data.data);
 						//如果是第一页需手动制空列表
 						if(page.num == 1) self.items = [];
-						console.log("data==" + JSON.stringify(data));
 						//更新列表数据
 						self.items = self.items.concat(data);
 						//联网成功的回调,隐藏下拉刷新和上拉加载的状态;

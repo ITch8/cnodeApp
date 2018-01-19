@@ -48,8 +48,8 @@
 					}
 				}]
 			});
-			webview_detail = plus.webview.getWebviewById('news_detail');
 			mui.plusReady(function() {
+				webview_detail = plus.webview.getWebviewById('news_detail');
 				var _self = plus.webview.currentWebview();
 				var group = new webviewGroup(_self.id, {
 					items: [{

@@ -1,1 +1,104 @@
-null
+{
+  "page_good.html": {
+    "href": "page_good.html",
+    "resources": [
+      "js/mui.min.js",
+      "js/mescroll.js",
+      "js/vue.min.js",
+      "components/list_item.js",
+      "js/vue_lazyload.js",
+      "js/common.js",
+      "img/mescroll-totop.png",
+      "img/default-person.png",
+      "css/mui.min.css",
+      "css/mescroll.css",
+      "css/main.css"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "page_job.html": {
+    "href": "page_job.html",
+    "resources": [
+      "js/mui.min.js",
+      "js/mescroll.js",
+      "js/vue.min.js",
+      "components/list_item.js",
+      "js/vue_lazyload.js",
+      "js/common.js",
+      "img/mescroll-totop.png",
+      "img/default-person.png",
+      "css/mui.min.css",
+      "css/mescroll.css",
+      "css/main.css"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "page_share.html": {
+    "href": "page_share.html",
+    "resources": [
+      "js/mui.min.js",
+      "js/mescroll.js",
+      "js/vue.min.js",
+      "components/list_item.js",
+      "js/vue_lazyload.js",
+      "js/common.js",
+      "img/mescroll-totop.png",
+      "img/default-person.png",
+      "css/mui.min.css",
+      "css/mescroll.css",
+      "css/main.css"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "detail.html": {
+    "href": "detail.html",
+    "resources": [
+      "css/mui.min.css",
+      "css/list-to-detail.css",
+      "js/mui.min.js",
+      "js/vue.min.js",
+      "js/common.js"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "page_ask.html": {
+    "href": "page_ask.html",
+    "resources": [
+      "js/mui.min.js",
+      "js/mescroll.js",
+      "js/vue.min.js",
+      "components/list_item.js",
+      "js/vue_lazyload.js",
+      "js/common.js",
+      "img/mescroll-totop.png",
+      "img/default-person.png",
+      "css/mui.min.css",
+      "css/mescroll.css",
+      "css/main.css"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "index.html": {
+    "href": "index.html",
+    "resources": [
+      "css/mui.min.css",
+      "css/index.css",
+      "js/mui.min.js",
+      "js/common.js",
+      "js/webviewGroup.js"
+    ],
+    "refer": [
+      "page_good.html",
+      "page_job.html",
+      "page_share.html",
+      "detail.html",
+      "page_ask.html"
+    ],
+    "priority": 0
+  }
+}
