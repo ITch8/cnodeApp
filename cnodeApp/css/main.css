@@ -1,0 +1,50 @@
+body {
+				background-color: #fff;
+			}
+			
+			.mui-media {
+				font-size: 14px;
+			}
+			
+			.meta-info {
+				position: absolute;
+				left: 88px;
+				right: 15px;
+				bottom: 8px;
+				color: #8f8f94;
+			}
+			
+			.meta-info .author,
+			.meta-info .time {
+				display: inline-block;
+			}
+			
+			.meta-info {
+				font-size: 12px;
+			}
+			
+			.meta-info .time {
+				float: right;
+			}
+			
+			.mui-content>.mui-table-view:first-child {
+				margin-top: 1px;
+			}
+			
+			.color_top {
+				color: #FF5053;
+				margin: 0 8px;
+			}
+			
+			.color_good {
+				color: #4CD964;
+				margin: 0 8px;
+			}
+			/*列表*/
+			
+			.mescroll {
+				position: fixed;
+				top: 0px;
+				bottom: 0;
+				height: auto;
+			}

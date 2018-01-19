@@ -66,10 +66,10 @@
 				//前页传入的数据，直接渲染，无需等待ajax请求详情后
 				vm.cover = event.detail.cover;
 				vm.title = event.detail.title;
-				vm.author = event.detail.author;
 				vm.time = event.detail.time;
 				
 				util.mypost('topic/'+id,{mdrender:true},'get',function(data){
+					vm.author = data.data.author.loginname;
 					vm.content = data.data.content;
 				},function(xhr){
 					mui.toast('获取文章内容失败');

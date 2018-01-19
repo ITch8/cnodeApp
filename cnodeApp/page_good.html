@@ -7,113 +7,33 @@
 		<title></title>
 		<link href="css/mui.min.css" rel="stylesheet" />
 		<link rel="stylesheet" href="css/mescroll.css" />
-		<style>
-			body {
-				background-color: white;
-			}
-			
-			.mui-media {
-				font-size: 14px;
-			}
-			
-			.mui-table-view .mui-media-object {
-				max-width: initial;
-				width: 90px;
-				height: 70px;
-			}
-			
-			.meta-info {
-				position: absolute;
-				left: 115px;
-				right: 15px;
-				bottom: 8px;
-				color: #8f8f94;
-			}
-			
-			.meta-info .author,
-			.meta-info .time {
-				display: inline-block;
-			}
-			
-			.meta-info .time {
-				float: right;
-			}
-			
-			.mui-table-view:before,
-			.mui-table-view:after {
-				height: 0;
-			}
-			
-			.mui-content>.mui-table-view:first-child {
-				margin-top: 1px;
-			}
-			/*列表*/
-			
-			.mescroll {
-				position: fixed;
-				top: 0px;
-				bottom: 0;
-				height: auto;
-			}
-		</style>
+		<link rel="stylesheet" href="css/main.css" />
 	</head>
-
 	<body>
-		<!--滑动区域-->
-		<div id="mescroll" class="mescroll">
-			<!--展示上拉加载的数据列表-->
-			<ul id="dataList" class="mui-table-view">
-				<li class="mui-table-view-cell mui-media" v-for="item in items">
-					<a :data-guid="item.id" @tap="open_detail(item)">
-						<img class="mui-media-object mui-pull-left" :src="item.cover">
-						<div class="mui-media-body">
-							<div class="mui-ellipsis-2">{{item.title}}</div>
-						</div>
-						<div class="meta-info">
-							<div class="author">{{item.author}}</div>
-							<div class="time">{{item.time}}</div>
-						</div>
-					</a>
-				</li>
-			</ul>
+		<div id="app">
+			<div id="mescroll" class="mescroll">
+				<!--展示上拉加载的数据列表-->
+				<app-list :data='items'></app-list>
+			</div>
 		</div>
 	</body>
 	<script src="js/mui.min.js"></script>
 	<script type="text/javascript" src="js/mescroll.js"></script>
 	<script type="text/javascript" src="js/vue.min.js"></script>
+	<script type="text/javascript" src="components/list_item.js" ></script>
+	<script type="text/javascript" src="js/vue_lazyload.js"></script>
 	<script type="text/javascript" src="js/common.js"></script>
 	<script type="text/javascript" charset="utf-8">
 		mui.init();
-		var webview_detail = null; //详情页webview
-		var titleNView = { //详情页原生导航配置
-			backgroundColor: '#f7f7f7', //导航栏背景色
-			titleText: '', //导航栏标题
-			titleColor: '#000000', //文字颜色
-			type: 'transparent', //透明渐变样式
-			autoBackButton: true, //自动绘制返回箭头
-			splitLine: { //底部分割线
-				color: '#cccccc'
-			}
-		}
-		mui.plusReady(function() {
-			//预加载详情页
-			webview_detail = mui.preload({
-				url: 'detail.html',
-				id: 'news_detail',
-				styles: {
-					"render": "always",
-					"popGesture": "hide",
-					"bounce": "vertical",
-					"bounceBackground": "#efeff4",
-					"titleNView": titleNView
-				}
-			});
+		Vue.use(VueLazyload, {
+			preLoad: 1.3,
+			error: 'img/default-person.png',
+			loading: 'img/default-person.png',
+			attempt: 1
 		});
-
-		
 		//创建vue对象
 		var vm = new Vue({
-			el: "#dataList",
+			el: "#app",
 			data: {
 				mescroll: null,
 				items: []
@@ -136,15 +56,9 @@
 						empty: { //配置列表无任何数据的提示
 							warpId: "dataList",
 							icon: "img/mescroll-empty.png",
-							//						  	tip : "亲,暂无相关数据哦~" , 
-							//						  	btntext : "去逛逛 >" , 
-							//						  	btnClick : function() {
-							//						  		alert("点击了去逛逛按钮");
-							//						  	} 
 						}
 					}
 				});
-
 				//初始化vue后,显示vue模板布局
 				document.getElementById("dataList").style.display = "block";
 			},
@@ -162,7 +76,6 @@
 						console.log("data==" + JSON.stringify(data));
 						//更新列表数据
 						self.items = self.items.concat(data);
-						console.log("self.items.length==" + self.items.length);
 						//联网成功的回调,隐藏下拉刷新和上拉加载的状态;
 						//传参:数据的总数; mescroll会自动判断列表是否有无下一页数据,如果数据不满一页则提示无更多数据;
 						self.mescroll.endSuccess(data.length);
@@ -190,4 +103,5 @@
 			}, 'get', successCallback, errorCallback)
 		}
 	</script>
+
 </html>

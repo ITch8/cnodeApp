@@ -1,89 +1,13 @@
 <!DOCTYPE html>
 <html>
-
 	<head>
 		<meta charset="utf-8">
 		<title>Hello MUI</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
-
 		<link rel="stylesheet" href="css/mui.min.css">
-		<style>
-			.mui-pull-top-wrapper {
-				width: 42px;
-				height: 42px;
-				display: block;
-				text-align: center;
-				background-color: #efeff4;
-				border: 1px solid #ddd;
-				border-radius: 25px;
-				background-clip: padding-box;
-				box-shadow: 0 4px 10px #bbb;
-				overflow: hidden;
-			}
-			
-			.mui-pull-top-tips.mui-transitioning {
-				-webkit-transition-duration: 200ms;
-				transition-duration: 200ms;
-			}
-			
-			.mui-pull-top-tips .mui-pull-loading {
-				/*-webkit-backface-visibility: hidden;
-				-webkit-transition-duration: 400ms;
-				transition-duration: 400ms;*/
-				margin: 0;
-			}
-			
-			.mui-pull-top-wrapper .mui-icon,
-			.mui-pull-top-wrapper .mui-spinner {
-				margin-top: 0px;
-			}
-			
-			.mui-pull-top-wrapper .mui-icon.mui-reverse {
-				/*-webkit-transform: rotate(180deg) translateZ(0);*/
-			}
-			
-			.mui-pull-bottom-tips {
-				text-align: center;
-				background-color: #efeff4;
-				font-size: 15px;
-				line-height: 40px;
-				color: #777;
-			}
-			
-			.mui-pull-top-canvas {
-				overflow: hidden;
-				background-color: #fafafa;
-				border-radius: 40px;
-				box-shadow: 0 4px 10px #bbb;
-				width: 40px;
-				height: 40px;
-				margin: 0 auto;
-			}
-			
-			.mui-pull-top-canvas canvas {
-				width: 40px;
-			}
-			
-			.mui-slider-indicator.mui-segmented-control {
-				background-color: #efeff4;
-			}
-			
-			.mui-segmented-control.mui-scroll-wrapper .mui-scroll{
-				width: 100%;
-			}
-			.mui-segmented-control.mui-scroll-wrapper .mui-control-item{
-				width: 25%;
-			}
-			
-			.mui-slider-indicator.mui-segmented-control{
-				background: #4a4747;
-			}
-			.mui-segmented-control.mui-scroll-wrapper .mui-control-item{
-				color: #fff;
-			}
-		</style>
+		<link rel="stylesheet" href="css/index.css" />
 	</head>
 
 	<body>
@@ -108,10 +32,23 @@
 			</div>
 		</div>
 		<script src="js/mui.min.js"></script>
+		<script type="text/javascript" src="js/common.js" ></script>
 		<script src="js/webviewGroup.js" type="text/javascript" charset="utf-8"></script>
 		<script>
-			mui.init();
-			
+			mui.init({
+				preloadPages:[{//预加载详情页
+					url: 'detail.html',
+					id: 'detail',
+					styles: {
+						"render": "always",
+						"popGesture": "hide",
+						"bounce": "vertical",
+						"bounceBackground": "#efeff4",
+						"titleNView": titleNView
+					}
+				}]
+			});
+			webview_detail = plus.webview.getWebviewById('news_detail');
 			mui.plusReady(function() {
 				var _self = plus.webview.currentWebview();
 				var group = new webviewGroup(_self.id, {

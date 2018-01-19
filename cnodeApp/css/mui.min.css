@@ -1875,7 +1875,7 @@ input[type=submit]:enabled:active {
 .mui-table-view-cell {
 	position: relative;
 	overflow: hidden;
-	padding: 11px 15px;
+	padding: 14px 15px;
 	-webkit-touch-callout: none
 }
 
@@ -1883,12 +1883,12 @@ input[type=submit]:enabled:active {
 	position: absolute;
 	right: 0;
 	bottom: 0;
-	left: 15px;
+	left: 0px;
 	height: 1px;
 	content: '';
 	-webkit-transform: scaleY(.5);
 	transform: scaleY(.5);
-	background-color: #c8c7cc
+	background-color: #efe9e9
 }
 
 .mui-table-view-cell.mui-checkbox input[type=checkbox],
@@ -2074,11 +2074,12 @@ input[type=submit]:enabled:active {
 .mui-table-view .mui-media-object {
 	line-height: 42px;
 	max-width: 42px;
-	height: 42px
+	height: 42px;
+	border-radius: 42px;
 }
 
 .mui-table-view .mui-media-object.mui-pull-left {
-	margin-right: 10px
+	margin-right: 30px
 }
 
 .mui-table-view .mui-media-object.mui-pull-right {
