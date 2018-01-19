@@ -188,6 +188,15 @@
 					"xxhdpi": "C:/Users/Administrator/Desktop/未标题-3.png"
 				}
 			}
+		},
+		"launchwebview": {
+		    "statusbar": {
+		        "background": "#4a4747"
+		    }
+		},
+		"statusbar": {
+			"immersed": true,
+			"style": "light"
 		}
 	},
 	"dependencies":{
