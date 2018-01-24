@@ -29,7 +29,7 @@ var titleNView = { //详情页原生导航配置
 				dataType: 'json',
 				timeout: 60000,
 				success: function(data) {
-//					console.log('res='+JSON.stringify(data))
+					console.log('res='+JSON.stringify(data))
 					_.isFunction(success) ? success(data) : '';
 				},
 				error: function(xhr) {
@@ -37,6 +37,24 @@ var titleNView = { //详情页原生导航配置
 				}
 			});
 		}, 50);
+	};
+	w.openView = function(url, extras) {
+		var id = url.split('?')[0].replace(/(.*)\//g, '').split('.')[0];
+		extras = extras ? extras : {};
+		_.openWindow({
+			id: id,
+			url: url,
+			extras: extras,
+			styles: {
+				popGesture: "colse"
+			},
+			show: {
+				duration: 300
+			},
+			waiting: {
+				autoShow: false
+			}
+		})
 	};
 })(window, mui, window.util = {});
 

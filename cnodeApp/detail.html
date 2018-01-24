@@ -1,12 +1,36 @@
 <!doctype html>
 <html>
+
 	<head>
 		<meta charset="UTF-8">
 		<title></title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="css/mui.min.css" rel="stylesheet" />
 		<link rel="stylesheet" type="text/css" href="css/list-to-detail.css" />
+		<style>
+			.to_comment_div {
+				width: 40px;
+				height: 40px;
+				background: rgba(0, 0, 0, 0.6);
+				color: #fff;
+				line-height: 41px;
+				text-align: center;
+				border-radius: 40px;
+				font-size: 12px;
+				position: fixed;
+				bottom: 4%;
+				z-index: 999;
+				right: 5%;
+				padding: 0;
+				border: 0;
+			}
+			
+			.mui-icon.mui-icon-chatbubble {
+				font-size: 17px;
+			}
+		</style>
 	</head>
+
 	<body>
 		<div class="mui-content">
 			<!--顶部banner图 开始-->
@@ -17,7 +41,6 @@
 				<h2 id="kr-article-title" class="kr-article-title">{{title}}</h2>
 			</div>
 			<!--顶部banner图 结束-->
-			
 			<div class="kr-article-content">
 				<!-- 文章作者、发布时间等信息 -->
 				<div class="kr-article-meta">
@@ -28,69 +51,85 @@
 				<!--文章详细内容-->
 				<div id="kr-article-article" class="kr-article-article" v-html="content"></div>
 			</div>
+			<button id="toComment" class="to_comment_div">
+				<span class="mui-icon mui-icon-chatbubble"></span>
+				<span>{{repliesNum}}</span>
+			</button>
 		</div>
-
-		<script src="js/mui.min.js"></script>
-		<script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
-		<script type="text/javascript" src="js/common.js" ></script>
-		<script type="text/javascript">
-			mui.init();
-
-			function getDefaultData() {
-				return {
-					cover: '',
-					title: '',
-					author: '',
-					time: '',
-					content: ''
-				}
-			}
-
-			var vm = new Vue({
-				el: '.mui-content',
-				data: getDefaultData(),
-				methods: {
-					resetData: function() {//重置数据
-						Object.assign(this.$data, getDefaultData());
-					}
-				}
-			});
-
-			//监听自定义事件，获取新闻详情
-			document.addEventListener('get_detail', function(event) {
-				var id = event.detail.id;
-				if(!id) {
-					return;
-				}
-				
-				//前页传入的数据，直接渲染，无需等待ajax请求详情后
-				vm.cover = event.detail.cover;
-				vm.title = event.detail.title;
-				vm.time = event.detail.time;
-				
-				util.mypost('topic/'+id,{mdrender:true},'get',function(data){
-					vm.author = data.data.author.loginname;
-					vm.content = data.data.content;
-				},function(xhr){
-					mui.toast('获取文章内容失败');
-				})
-			});
-
-			//重写返回逻辑
-			mui.back = function() {
-				plus.webview.currentWebview().hide("auto", 300);
-			}
-			
-			//窗口隐藏时，重置页面数据
-			mui.plusReady(function () {
-				var self = plus.webview.currentWebview();
-				self.addEventListener("hide",function (e) {
-					window.scrollTo(0, 0);
-					vm.resetData();
-				},false);
-			})
-			
-		</script>
 	</body>
+	<script src="js/mui.min.js"></script>
+	<script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript" src="js/common.js"></script>
+	<script type="text/javascript">
+		mui.init();
+		function getDefaultData() {
+			return {
+				cover: '',
+				title: '',
+				author: '',
+				time: '',
+				content: '',
+				repliesNum: '0',
+				commentsArr:[]
+			}
+		}
+
+		var vm = new Vue({
+			el: '.mui-content',
+			data: getDefaultData(),
+			methods: {
+				resetData: function() { //重置数据
+					Object.assign(this.$data, getDefaultData());
+				}
+			}
+		});
+
+		//监听自定义事件，获取新闻详情
+		document.addEventListener('get_detail', function(event) {
+			var id = event.detail.id;
+			if(!id) {
+				return;
+			}
+
+			//前页传入的数据，直接渲染，无需等待ajax请求详情后
+			vm.cover = event.detail.cover;
+			vm.title = event.detail.title;
+			vm.time = event.detail.time;
+
+			util.mypost('topic/' + id, {
+				mdrender: true
+			}, 'get', function(data) {
+				vm.author = data.data.author.loginname;
+				vm.content = data.data.content;
+				vm.repliesNum = data.data.replies.length || 0;
+				vm.commentsArr = data.data.replies || [];
+			}, function(xhr) {
+				mui.toast('获取文章内容失败');
+			})
+		});
+
+		document.getElementById("toComment").addEventListener('tap',function(){
+			var webview = plus.webview.getWebviewById('comments');
+				mui.fire(webview, 'get_comments', {
+					commentsArr:vm.commentsArr
+				});
+				setTimeout(function() {
+					webview && webview.show("slide-in-right", 300);
+				}, 150);
+		})
+		//重写返回逻辑
+		mui.back = function() {
+			plus.webview.currentWebview().hide("auto", 300);
+		}
+
+		//窗口隐藏时，重置页面数据
+		mui.plusReady(function() {
+			var self = plus.webview.currentWebview();
+			self.addEventListener("hide", function(e) {
+				window.scrollTo(0, 0);
+				vm.resetData();
+			}, false);
+		})
+	</script>
 
 </html>

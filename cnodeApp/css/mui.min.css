@@ -461,7 +461,7 @@ p {
 	font-size: 14px;
 	margin-top: 0;
 	margin-bottom: 10px;
-	color: #8f8f94
+	color: #999
 }
 
 .mui-row:after,
@@ -2072,10 +2072,10 @@ input[type=submit]:enabled:active {
 }
 
 .mui-table-view .mui-media-object {
-	line-height: 42px;
-	max-width: 42px;
-	height: 42px;
-	border-radius: 42px;
+	line-height: 35px;
+	max-width: 35px;
+	height: 35px;
+	border-radius:35px;
 }
 
 .mui-table-view .mui-media-object.mui-pull-left {
