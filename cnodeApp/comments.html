@@ -10,11 +10,14 @@
 		<link rel="stylesheet" href="css/main.css" />
 		<style>
 			.font_12 {
-				font-size: 12px;;
+				font-size: 12px;
+				;
 			}
-			.color_333{
+			
+			.color_333 {
 				color: #333
 			}
+			
 			.floor {
 				position: relative;
 				bottom: 15px;
@@ -25,11 +28,13 @@
 			.content {
 				margin: 10px 0 0;
 			}
-			.mui-bar-transparent{
-				 top: 20px;
-				 border-bottom: 1px solid #dedede;
+			
+			.mui-bar-transparent {
+				top: 20px;
+				border-bottom: 1px solid #dedede;
 			}
-			.mescroll{
+			
+			.mescroll {
 				top: 65px;
 			}
 		</style>
@@ -75,10 +80,15 @@
 				self.mescroll = new MeScroll("mescroll", {
 					up: {
 						callback: self.upCallback, //上拉回调
-					},toTop: { //配置回到顶部按钮
-							src: "img/mescroll-totop.png", //默认滚动到1000px显示,可配置offset修改
-							//offset : 1000
-						}
+					},
+					toTop: { //配置回到顶部按钮
+						src: "img/mescroll-totop.png", //默认滚动到1000px显示,可配置offset修改
+						//offset : 1000
+					},
+					empty: { //配置列表无任何数据的提示
+						warpId: "dataList",
+						icon: "img/nodata.png",
+					}
 				});
 				//初始化vue后,显示vue模板布局
 				document.getElementById("dataList").style.display = "block";
@@ -101,6 +111,7 @@
 
 		//监听自定义事件，获取新闻详情
 		document.addEventListener('get_comments', function(event) {
+			vm.mescroll.scrollTo(); //返回到顶部
 			commentsArr = event.detail.commentsArr;
 			vm.items = comConvert(commentsArr);
 			vm.commentsNum = vm.items.length;
@@ -114,11 +125,11 @@
 		 */
 		function comConvert(items) {
 			var newItems = [];
-			items.forEach(function(item,index) {
+			items.forEach(function(item, index) {
 				newItems.push({
 					id: item.id,
 					content: item.content,
-					index:index + 1,
+					index: index + 1,
 					loginname: item.author.loginname,
 					cover: item.author.avatar_url,
 					time: dateUtils.format(item.create_at)
