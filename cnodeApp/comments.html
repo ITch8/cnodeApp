@@ -10,9 +10,11 @@
 		<link rel="stylesheet" href="css/main.css" />
 		<style>
 			.font_12 {
-				font-size: 12px;
+				font-size: 12px;;
 			}
-			
+			.color_333{
+				color: #333
+			}
 			.floor {
 				position: relative;
 				bottom: 15px;
@@ -21,7 +23,6 @@
 			}
 			
 			.content {
-				color: #222222;
 				margin: 10px 0 0;
 			}
 			.mui-bar-transparent{
@@ -74,7 +75,10 @@
 				self.mescroll = new MeScroll("mescroll", {
 					up: {
 						callback: self.upCallback, //上拉回调
-					}
+					},toTop: { //配置回到顶部按钮
+							src: "img/mescroll-totop.png", //默认滚动到1000px显示,可配置offset修改
+							//offset : 1000
+						}
 				});
 				//初始化vue后,显示vue模板布局
 				document.getElementById("dataList").style.display = "block";
@@ -110,17 +114,17 @@
 		 */
 		function comConvert(items) {
 			var newItems = [];
-			items.forEach(function(item) {
+			items.forEach(function(item,index) {
 				newItems.push({
 					id: item.id,
 					content: item.content,
-					index: '1',
+					index:index + 1,
 					loginname: item.author.loginname,
 					cover: item.author.avatar_url,
 					time: dateUtils.format(item.create_at)
 				});
 			});
-			return newItems;
+			return newItems.reverse();
 		}
 	</script>
 
