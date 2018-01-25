@@ -230,7 +230,7 @@ body {
 
 a {
 	text-decoration: none;
-	color: #007aff
+	color: #4a4747
 }
 
 a:active {
@@ -1324,7 +1324,7 @@ input[type=submit]:enabled:active {
 	padding: 0;
 	text-align: center;
 	white-space: nowrap;
-	color: #000
+	color: #4a4747
 }
 
 .mui-title a {
