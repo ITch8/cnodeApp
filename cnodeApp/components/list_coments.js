@@ -23,6 +23,7 @@
 			}
 		},methods:{
 			to_user:function(loginname){
+				window.openView('user.html',{loginname:loginname})
 				console.log('loginname=====' + loginname);
 			}
 		}

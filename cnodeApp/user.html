@@ -1,0 +1,160 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/main.css" />
+		<style>
+			.h_div {
+				background-color: #4a4747;
+				color: #EEEEEE;
+				text-align: center;
+				padding: 30px 10px 10px;
+			}
+			
+			.h_div img {
+				width: 60px;
+			}
+			
+			.h_div_b {
+				background-color: #4a4747;
+				color: #EEEEEE;
+				padding: 0 10px 10px;
+				color: #999;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		    <h1 class="mui-title">标题</h1>
+		</header>
+		<div id="app">
+			<div class="h_div">
+				<img src="{{avatar_url}}" />
+				<p>{{githubUsername}}</p>
+			</div>
+			<p class="h_div_b">注册时间:{{create_at}}<span class="mui-pull-right">积分:{{score}}</span></p>
+			<!--<app-list :data='itemsRecent_replies'></app-list>-->
+			<div id="slider" class="mui-slider">
+				<div id="sliderSegmentedControl" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+					<a class="mui-control-item" href="#recent_replies">最近回复</a>
+					<a class="mui-control-item" href="#recent_topics">最新发布</a>
+				</div>
+				<div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-6"></div>
+				<div class="mui-slider-group">
+					<div id="recent_replies" class="mui-slider-item mui-control-content mui-active">
+						<div id="scroll1" class="mui-scroll-wrapper">
+							<div class="mui-scroll">
+								<ul>
+									<li>sdfasd</li>
+								</ul>
+								<ul>
+									<li>sdfasd</li>
+								</ul>
+								<ul>
+									<li>sdfasd</li>
+								</ul>
+								<ul>
+									<li>sdfasd</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div id="recent_topics" class="mui-slider-item mui-control-content">
+						<div id="scroll2" class="mui-scroll-wrapper">
+							<div class="mui-scroll">
+								<app-list :data='itemsRecent_topics'></app-list>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="js/mui.min.js"></script>
+	<script type="text/javascript" src="js/mescroll.js"></script>
+	<script type="text/javascript" src="js/vue.min.js"></script>
+	<script type="text/javascript" src="components/list_item_user.js"></script>
+	<script type="text/javascript" src="js/vue_lazyload.js"></script>
+	<script type="text/javascript" src="js/common.js"></script>
+	<script type="text/javascript">
+		mui.init()
+		Vue.use(VueLazyload, {
+			preLoad: 1.3,
+			error: 'img/default-person.png',
+			loading: 'img/default-person.png',
+			attempt: 1
+		});
+
+		//创建vue对象
+		var vm = new Vue({
+			el: "#app",
+			data: {
+				itemsRecent_replies: [], //最近回复
+				itemsRecent_topics: [], //最新发布
+				githubUsername: 0,
+				score: '0',
+				create_at: ''
+			},
+			mounted: function() {
+				//初始化vue后,显示vue模板布局
+				document.getElementById("dataList").style.display = "block";
+			},
+			methods: {
+				
+			}
+		});
+		
+		
+		mui.plusReady(function() {
+			var loginname = plus.webview.currentWebview().loginname;
+			getUserData(loginname);
+		})
+		
+		function getUserData(loginname) {
+			var data = null;
+			util.mypost('user/' + loginname, {}, 'get', function(data){
+				if(data.success){
+					data = data.data;
+					vm.githubUsername = data.loginname;
+					vm.avatar_url = data.avatar_url;
+					vm.create_at = dateUtils.format(data.create_at);
+					vm.score = data.score || 0;
+					vm.itemsRecent_replies = comConvert(data.recent_replies);
+					vm.itemsRecent_topics = comConvert(data.recent_topics);
+					console.log("vm.itemsRecent_topics=====" + JSON.stringify(vm.itemsRecent_topics));
+				}else{
+					mui.toast('获取数据失败')
+				}
+			}, function(err){
+				mui.toast('获取数据失败')
+			})
+		}
+		
+		/**
+		 * 1、将服务端返回数据，转换成前端需要的格式
+		 * 2、若服务端返回格式和前端所需格式相同，则不需要改功能
+		 * 
+		 * @param {Array} items 
+		 */
+		function comConvert(items) {
+			var newItems = [];
+			items.forEach(function(item, index) {
+				newItems.push({
+					id: item.id,
+					title: item.title,
+					loginname: item.author.loginname,
+					cover: item.author.avatar_url,
+					time: dateUtils.format(item.last_reply_at)
+				});
+			});
+			return newItems.reverse();
+		}
+	</script>
+
+</html>
