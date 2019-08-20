@@ -4,6 +4,12 @@ CNode：Node.js专业中文社区
 
 cnode移动端 （ android 和 iOS ）
 
+# 体验效果 
+ 
+ 扫码下载Android端  
+ 
+![APP下载](https://github.com/ITch8/cnodeApp/blob/master/net_img/app.png)
+
 # 技术
 
 mui + html5Plus + vue2
@@ -17,10 +23,10 @@ v1.0.0
 1.0.2 增加用户主页、评论页面
 
 # 运行
- 下载源码  
- HBuider导入项目  
- 发行-云打包为app
-
+ 1、下载源码  
+ 2、HBuider导入cnodeApp 文件夹（导入项目）
+ 3、发行-云打包为app
+ 
 # 截图
 
 
