@@ -24,7 +24,7 @@ v1.0.0
 
 ## 运行
  1、下载源码  
- 2、HBuider导入cnodeApp 文件夹（导入项目）
+ 2、HBuider导入cnodeApp 文件夹（导入项目）  
  3、发行-云打包为app
  
 ## 截图
